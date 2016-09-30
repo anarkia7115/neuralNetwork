@@ -14,19 +14,22 @@ class Circuit():
             self.mulgs[i] = multiGate()
             self.addgs[i] = addGate()
 
-    def forward(self, x, w):
+    def forward(self, x, y, w):
         '''
         x = [x0, x1, x2, ..., xn]
         w = [w0, w1, w2, ..., wn, w_n+1]
         '''
 
         # skip first add to score
-        score = Unit(w[-1], 0.0)
+        score = []
+        score.append(Unit(w[-1], 0.0))
 
-        # assert len(x) + 1 = len(w)
-        for i in range(len(x)):
-            wxi     = self.mulgs[i].forward(w[i], x[i])
-            score   = self.addgs[i].forward(score, wxi)
+        # assert len(x) + 1 == len(w)
+        for xx in x:
+            for i in range(len(xx)):
+                wxi     = self.mulgs[i].forward(w[i], xx[i])
+                scorei  = self.addgs[i].forward(score, wxi)
+                score.append(scorei)
 
         self.score = score
         return self.score
