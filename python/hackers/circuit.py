@@ -14,11 +14,11 @@ class Circuit():
             self.mulgs[i] = multiGate()
             self.addgs[i] = addGate()
 
-    def forward(self, x, y, w):
-        '''
+    def forward(self, x, w):
+        """
         x = [x0, x1, x2, ..., xn]
         w = [w0, w1, w2, ..., wn, w_n+1]
-        '''
+        """
 
         # skip first add to score
         score = []
@@ -74,5 +74,12 @@ class Svm():
         reg_cost = 0.0
         for i in range(len(self.w) - 1):
             reg_cost += ww.value ** 2
+        return
+
+    def learnForm(self, x, y):
+        return
+
+    def parameterUpdate(self):
+        return
 
 
